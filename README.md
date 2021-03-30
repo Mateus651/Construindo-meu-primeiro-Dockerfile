@@ -16,7 +16,7 @@ carregados pelo site
 RUN cd / && mkdir Arquivos && chmod 777 -R Arquivos/
  1 - navegamos pelo diretorio cd /
  2 - criamos um diretorio chamado Arquivos
- 3 - Damos permissão total de leitura e escrita para chmod 777 -R Arquivos/
+ 3 - Damos permissão total de leitura,escrita e execuçao para chmod 777 -R Arquivos/
  
 4 - Copiei o site para imagem
 
