@@ -4,7 +4,7 @@ Criando um dockerfile que contenha um projeto em HTML renderizando um Hello-Worl
 Passo a passo para criar um dockerfile que contenha um projeto em HTML renderizando um Hello-World hospendando no webserver nginx: 
 
 1 - Defini uma imagem oficial como base para que futuramente possa ser 
-modificada caso precise escolhendo um editor de texto
+modificada caso precise, e escolhi um editor de texto
 FROM nginx
 
 2 - Defini as informações necessarias para a imagem como versão, descrição e autor/ou responsável 
@@ -14,7 +14,7 @@ LABEL version="1.0.0" description="Disponibilizando site com nginx" maintainer="
 carregados pelo site
 
 RUN cd / && mkdir Arquivos && chmod 777 -R Arquivos/
- 1 - navegamos pela raiz cd /
+ 1 - navegamos pelo diretorio cd /
  2 - criamos um diretorio chamado Arquivos
  3 - Damos permissão total de leitura e escrita para chmod 777 -R Arquivos/
  
@@ -40,10 +40,10 @@ um conteiner utilizando essa imagem
 padrão para elas e caso não seja informado na criação do conteiner, o valor
 das variaveis serão os mesmos definidos no Dockerfile
 
-8 - Defini qual sera o diretorio de trabalho da imagem (diretorio que irá 
+8 - Defini qual será o diretorio de trabalho da imagem (diretorio que irá 
 conter o site)
 WORKDIR /usr/share/nginx/html/
-É muito importante definir o diretorio de trabalho como nosso diretorio de trabalho, ela será o diretorio que direcionará quando acessarmos o nosso container.
+É muito importante definir o diretorio de trabalho de nosso conteiner, ela será o diretorio que direcionará quando acessarmos o nosso container.
 
 9 - subimos o nginx depois de finalizar todos os passos acima, deixando o site no ar, sendo definidas todas as regras no Dockerfile. Para finalmente o servidor entrar em operação devemos aplicar a instrução ENTRYPOINT que vai dizer onde deve ser executado o CMD ou seja um complementa o outro. O comando
 final para subir vai ser /usr/sbin/nginx -g daemon off;
@@ -60,14 +60,14 @@ o conteúdo do index.html será:
   <body>
       Hello-World!
   </body>
-    
+</html>   
+ 
  10 - esse comando cria a imagem à partir do Dockerfile
  docker build -t mabarcelos95/meu-site  .
  
  obs.: o -t serve para passar como parametro seguido do nome da imagem que queremos criar /meu-site e o . é onde se localiza o Dockerfile
-      
-      
-      
+
+saída do comando sudo docker build -t mabarcelos95/meu-site .
 sudo docker build -t mabarcelos95/meu-site .
 Sending build context to Docker daemon   2.56kB
 Step 1/11 : FROM nginx
@@ -111,3 +111,8 @@ Removing intermediate container 9dab7f54aa8e
 Successfully built 9a1ba4611f6c
 Successfully tagged mabarcelos95/meu-site:latest
 
+ 11 - Depois de rodar o comando build e ocorrer tudo certo, uma imagem com nome mabarcelos95/meusite irá ser criada, e com isso podemos
+ criar nosso container e subir o nosso site com este comando:
+ docker run -d -p 80:80 --name meu-site -e API_URL=http://api.meusite.com.br/api/ -v $PWD/site/arquivos:/Arquivos/ mabarcelos95/meu-site
+ 
+      
